@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>GrindTime</title>
+    <meta name="title" content="GrindTime" />
+    <meta
+      name="description"
+      content="GrindTime is a gamified productivity app that rewards your study time with gaming time. Track your progress, complete tasks, and maintain a healthy balance between work and play."
+    />
+    <meta
+      name="keywords"
+      content="grindtime, study timer, game timer, productivity app, time management, gamification, study tracker, pomodoro, focus timer"
+    />
+    <meta name="author" content="GrindTime" />
+    <meta name="theme-color" content="#667eea" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <button class="menu-btn" id="menuBtn">☰</button>
+
+    <div class="sidebar" id="sidebar">
+      <button class="sidebar-close" id="sidebarClose">×</button>
+      <h2 class="sidebar-title">Statistics</h2>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Study</h3>
+        <div class="sidebar-stat">
+          <span class="sidebar-label">Today's Progress</span>
+          <span class="sidebar-value" id="totalStudyTime">0h 0m</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Game</h3>
+        <div class="sidebar-stat">
+          <span class="sidebar-label">Total Earned Game Time</span>
+          <span class="sidebar-value" id="totalGameTime">0h 0m</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">📋 System Rules</h3>
+        <ul class="rules-list">
+          <li>Every 2 hours of study unlocks 30 minutes of gaming time</li>
+          <li>Completing a task awards an additional 30 minutes</li>
+          <li>Maximum continuous gaming session is limited to 2 hours</li>
+          <li>All progress and timers reset automatically at midnight</li>
+        </ul>
+      </div>
+
+      <button class="btn btn-reset" id="resetBtn">
+        <span class="btn-icon">🔄</span>
+        Reset All Data
+      </button>
+    </div>
+
+    <div class="container">
+      <div class="clock-section study-section">
+        <div class="section-header">
+          <h1>Study📚</h1>
+          <p class="subtitle">Build your future</p>
+        </div>
+
+        <div class="clock-display">
+          <div class="time" id="studyTime">00:00:00</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" id="studyStartPause">Start</button>
+        </div>
+
+        <div class="task-container">
+          <button class="btn btn-task" id="taskCompleted">
+            <span class="btn-icon">✓</span>
+            Task Completed
+            <span class="btn-bonus">+30 min</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="clock-section game-section">
+        <div class="section-header">
+          <h1>Game🎮</h1>
+          <p class="subtitle">Earned rewards</p>
+        </div>
+
+        <div class="clock-display">
+          <div class="time" id="gameTime">00:00:00</div>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn-primary" id="gameStartPause">Start</button>
+        </div>
+
+        <div class="lives-container">
+          <div class="lives-label">Available Lives</div>
+          <div class="lives-display" id="livesDisplay"></div>
+          <div class="lives-text" id="livesText">0 lives (0 min)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+      <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h2>Time's Up!</h2>
+        <p>You have gamed for 2 hours straight.<br />Back to study.</p>
+        <button class="btn btn-primary" id="modalClose">Got it</button>
+      </div>
+    </div>
+
+    <div class="modal" id="resetModal">
+      <div class="modal-content">
+        <div class="modal-icon">🔄</div>
+        <h2>Reset All Data?</h2>
+        <p>
+          This will clear both clocks and all progress.<br />This action cannot
+          be undone.
+        </p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="resetCancel">Cancel</button>
+          <button class="btn btn-danger" id="resetConfirm">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
