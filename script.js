@@ -22,6 +22,26 @@ function init() {
   updateUI();
   startUpdateLoop();
   attachEventListeners();
+  requestNotificationPermission();
+}
+
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function showNotification(title, body, icon = '⏰') {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(title, {
+      body: body,
+      icon: '/favicon.svg',
+      badge: '/favicon.svg',
+      tag: 'grindtime-notification',
+      requireInteraction: false,
+      silent: false
+    });
+  }
 }
 
 function loadState() {
@@ -135,6 +155,7 @@ function updateUI() {
 
   if (availableSeconds <= 0 && state.gameClockRunning) {
     stopGameClock();
+    showNotification('Game Time Over! ⏰', 'Your game time has ended. Time to get back to studying!');
   }
 
   updateLivesDisplay(availableSeconds);
@@ -175,6 +196,7 @@ function checkContinuousGameLimit() {
     if (continuousSeconds >= MAX_CONTINUOUS_GAME_SECONDS) {
       stopGameClock();
       showWarningModal();
+      showNotification('2 Hour Limit Reached! 🎮', 'You have gamed for 2 hours straight. Time to take a break and study!');
     }
   }
 }
@@ -196,6 +218,16 @@ function showResetModal() {
 
 function hideResetModal() {
   const modal = document.getElementById('resetModal');
+  modal.classList.remove('show');
+}
+
+function showNoGameTimeModal() {
+  const modal = document.getElementById('noGameTimeModal');
+  modal.classList.add('show');
+}
+
+function hideNoGameTimeModal() {
+  const modal = document.getElementById('noGameTimeModal');
   modal.classList.remove('show');
 }
 
@@ -241,7 +273,7 @@ function toggleGameClock() {
   } else {
     const available = getAvailableGameSeconds();
     if (available <= 0) {
-      alert('No game time available. Study more or complete tasks!');
+      showNoGameTimeModal();
       return;
     }
 
@@ -295,6 +327,7 @@ function attachEventListeners() {
   document.getElementById('resetBtn').addEventListener('click', showResetModal);
   document.getElementById('resetCancel').addEventListener('click', hideResetModal);
   document.getElementById('resetConfirm').addEventListener('click', confirmReset);
+  document.getElementById('noGameTimeClose').addEventListener('click', hideNoGameTimeModal);
 }
 
 function startUpdateLoop() {
